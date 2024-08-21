@@ -6,6 +6,9 @@ export default defineConfig({
         rollupOptions: {
             input: {
                 'main': resolve(__dirname, '/index.html'),
+                'home': resolve(__dirname, 'home/index.html'),
+                'about': resolve(__dirname, 'about/index.html'),
+                'contact': resolve(__dirname, 'contact/index.html'),
                 'home-desktop': resolve(__dirname, '/home/desktop/index.html'),
                 'home-mobile': resolve(__dirname, '/home/mobile/index.html'),
                 'home-tablet': resolve(__dirname, '/home/tablet/index.html'),
