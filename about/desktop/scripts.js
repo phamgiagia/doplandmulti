@@ -23,3 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // You can add more JavaScript functionality here
 });
+
+console.log(import.meta.env.VITE_API_URL);
+console.log(import.meta.env.VITE_API_KEY);
