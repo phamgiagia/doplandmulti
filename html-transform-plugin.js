@@ -1,27 +1,25 @@
-// html-transform-plugin.js
-import { parse, serialize } from 'parse5';
-import { walk } from 'estree-walker';
+// unplugin-html-transform.js
+import { createUnplugin } from 'unplugin';
 
-export default function htmlTransformPlugin() {
-    return {
-        name: 'html-transform', // name of the plugin
-        enforce: 'post',
-        apply: 'build',
-        transformIndexHtml(html) {
-            const document = parse(html);
-            walk(document, {
-                enter(node) {
-                    if (node.tagName === 'img' && node.attrs) {
-                        const srcAttr = node.attrs.find(attr => attr.name === 'src');
-                        // Check if the src attribute starts with the specified HTTPS URL
-                        if (srcAttr && srcAttr.value.startsWith('https://raw.githubusercontent.com/phamgiagia/doplandmulti/main/')) {
-                            // Replace the domain with '../../'
-                            srcAttr.value = srcAttr.value.replace(/^https:\/\/raw\.githubusercontent\.com\/phamgiagia\/doplandmulti\/main\//, '../../');
-                        }
-                    }
-                }
-            });
-            return serialize(document);
-        }
-    };
-}
+const HtmlTransformPlugin = createUnplugin(() => ({
+    name: 'html-transform',
+    enforce: 'pre',
+    transformInclude(id) {
+        // This method can help identify HTML files or specific cases to apply transforms.
+        // Adjust the condition to fit your needs, for example, to target only HTML files.
+        return id.endsWith('.html');
+    },
+    transform(code) {
+        // Using a regex to directly replace all matching src attributes in the HTML string
+        const updatedCode = code.replace(/src="https:\/\/raw\.githubusercontent\.com\/phamgiagia\/doplandmulti\/main\/[^"]+"/g, (match) => {
+            // Replace the full URL leaving only the path after the specific domain
+            return match.replace(/https:\/\/raw\.githubusercontent\.com\/phamgiagia\/doplandmulti\/main\//, '../../');
+        });
+        return {
+            code: updatedCode,
+            map: null, // Not needed unless you are dealing with source maps
+        };
+    }
+}));
+
+export default HtmlTransformPlugin;
