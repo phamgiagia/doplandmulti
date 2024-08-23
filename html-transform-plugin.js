@@ -1,5 +1,4 @@
 // html-transform-plugin.js
-import { readFileSync, writeFileSync } from 'fs';
 import { parse, serialize } from 'parse5';
 import { walk } from 'estree-walker';
 
@@ -14,8 +13,10 @@ export default function htmlTransformPlugin() {
                 enter(node) {
                     if (node.tagName === 'img' && node.attrs) {
                         const srcAttr = node.attrs.find(attr => attr.name === 'src');
-                        if (srcAttr && srcAttr.value.startsWith('http://')) {
-                            srcAttr.value = srcAttr.value.replace(/^http:\/\/[^/]+/, '../../');
+                        // Check if the src attribute starts with the specified HTTPS URL
+                        if (srcAttr && srcAttr.value.startsWith('https://raw.githubusercontent.com/phamgiagia/doplandmulti/main/')) {
+                            // Replace the domain with '../../'
+                            srcAttr.value = srcAttr.value.replace(/^https:\/\/raw\.githubusercontent\.com\/phamgiagia\/doplandmulti\/main\//, '../../');
                         }
                     }
                 }
