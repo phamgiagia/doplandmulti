@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import { resolve } from 'path'
 import * as glob from 'glob'
+import htmlTransformPlugin from './html-transform-plugin';
 
 // Function to automatically generate input entries
 function generateInputEntries() {
@@ -26,6 +27,7 @@ function generateInputEntries() {
 }
 
 export default defineConfig({
+    plugins: [htmlTransformPlugin()],
     build: {
         rollupOptions: {
             input: generateInputEntries(),
