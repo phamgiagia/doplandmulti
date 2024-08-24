@@ -1,5 +1,6 @@
 // vercel-ignore-build.js
-const https = require("https");
+import * as https from 'https';
+
  
 let vercelEnv = process.env.VERCEL_ENV;
 
