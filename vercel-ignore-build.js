@@ -24,7 +24,7 @@ const req = https.request(options, res => {
     let prodRunningFromDeployHook;
 
     try {
-      prodRunningFromDeployHook = parsedData.deployments.find(({state, meta, target}) => state === 'BUILDING' && target === 'production' && meta.deployHookId === 'AMKWb0OWhJ')
+      prodRunningFromDeployHook = parsedData.deployments.find(({state, meta, target}) => state === 'BUILDING' && target === 'production' && meta.deployHookName === 'active-build')
     } catch(e) {
       console.log('e: ', e);
       process.exit(0);
